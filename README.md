@@ -31,6 +31,8 @@ basic-http-server . # starts server based on current directory
 basic-http-server static # start server in the folder /static
 ```
 
+## TODO
+* update quad-snd
 
 ### External assets with license
 in this project I'm using Kenny assets fonts which is using:
