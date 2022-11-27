@@ -15,7 +15,7 @@ mod wave;
 
 fn window_conf() -> Conf {
     Conf {
-        window_title: "Demottack".to_owned(),
+        window_title: "DemonAttack".to_owned(),
         window_width: GAME_SIZE_X,
         window_height: GAME_SIZE_Y,
         ..Default::default()

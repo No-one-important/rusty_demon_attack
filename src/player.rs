@@ -86,11 +86,7 @@ impl Player {
                         BulletHurtType::Enemy,
                         resources,
                     ));
-                    resources.play_sound(
-                        SoundIdentifier::PlayerShoot,
-                        sound_mixer,
-                        Volume(1.0f32),
-                    );
+                    resources.play_sound(SoundIdentifier::PlayerShoot, sound_mixer, Volume(1.0f32));
                     self.shoot_timer = 0f32;
                 }
                 None

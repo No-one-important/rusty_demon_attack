@@ -81,11 +81,11 @@ impl Resources {
 
     pub async fn load_texture(
         &mut self,
-        file_name: &str,
+        bytes: &[u8],
         enemy_color: EnemyColor,
         enemy_type: EnemyType,
     ) -> Result<(), FileError> {
-        let texture: Texture2D = load_texture(file_name).await?;
+        let texture: Texture2D = load_texture_from_bytes(bytes)?;
         texture.set_filter(FilterMode::Nearest);
         let texture_vec = match enemy_type {
             EnemyType::Normal => match enemy_color {
@@ -122,30 +122,32 @@ impl Resources {
 }
 
 const SOUND_BYTES_SPAWN: &[u8] = include_bytes!("../resources/sounds/spawn.wav");
-const SOUND_BYTES_ENEMY_SHOOT: &[u8] =
-    include_bytes!("../resources/sounds/enemy_shoot.wav");
-const SOUND_BYTES_PLAYER_SHOOT: &[u8] =
-    include_bytes!("../resources/sounds/player_shoot.wav");
+const SOUND_BYTES_ENEMY_SHOOT: &[u8] = include_bytes!("../resources/sounds/enemy_shoot.wav");
+const SOUND_BYTES_PLAYER_SHOOT: &[u8] = include_bytes!("../resources/sounds/player_shoot.wav");
 
-const SOUND_BYTES_PLAYER_OUCH: &[u8] =
-    include_bytes!("../resources/sounds/player_ouch.wav");
+const SOUND_BYTES_PLAYER_OUCH: &[u8] = include_bytes!("../resources/sounds/player_ouch.wav");
 const SOUND_BYTES_ENEMY_OUCH: &[u8] = include_bytes!("../resources/sounds/enemy_ouch.wav");
 const SOUND_BYTES_SPAWN_MINI: &[u8] = include_bytes!("../resources/sounds/spawn_mini.wav");
 const SOUND_BYTES_WARNING: &[u8] = include_bytes!("../resources/sounds/warning.wav");
-const SOUND_BYTES_WAVE_CLEARED: &[u8] =
-    include_bytes!("../resources/sounds/wave_cleared.wav");
+const SOUND_BYTES_WAVE_CLEARED: &[u8] = include_bytes!("../resources/sounds/wave_cleared.wav");
+
+fn load_texture_from_bytes(bytes: &[u8]) -> Result<Texture2D, FileError> {
+    Ok(Texture2D::from_file_with_format(&bytes[..], None))
+}
 
 pub async fn load_resources(game_render_target: RenderTarget) -> Resources {
-    let texture_player: Texture2D = load_texture("resources/player.png").await.unwrap();
-    let texture_player_explotion: Texture2D = load_texture("resources/player_explotion.png")
-        .await
-        .unwrap();
+    let texture_player: Texture2D =
+        load_texture_from_bytes(include_bytes!("../resources/player.png")).unwrap();
+    let texture_player_explotion: Texture2D =
+        load_texture_from_bytes(include_bytes!("../resources/player_explotion.png")).unwrap();
     let texture_player_missile: Texture2D =
-        load_texture("resources/player_missile.png").await.unwrap();
+        load_texture_from_bytes(include_bytes!("../resources/player_missile.png")).unwrap();
     let texture_demon_missile: Texture2D =
-        load_texture("resources/demon_missile.png").await.unwrap();
-    let texture_ground_bg: Texture2D = load_texture("resources/ground_bg.png").await.unwrap();
-    let texture_life: Texture2D = load_texture("resources/life.png").await.unwrap();
+        load_texture_from_bytes(include_bytes!("../resources/demon_missile.png")).unwrap();
+    let texture_ground_bg: Texture2D =
+        load_texture_from_bytes(include_bytes!("../resources/ground_bg.png")).unwrap();
+    let texture_life: Texture2D =
+        load_texture_from_bytes(include_bytes!("../resources/life.png")).unwrap();
 
     // set all textures filter mode to nearest
     for texture in [
@@ -162,9 +164,9 @@ pub async fn load_resources(game_render_target: RenderTarget) -> Resources {
         texture.set_filter(FilterMode::Nearest);
     }
 
-    let font = load_ttf_font("resources/Kenney Pixel Square.ttf")
-        .await
+    let font = load_ttf_font_from_bytes(include_bytes!("../resources/Kenney Pixel Square.ttf"))
         .unwrap();
+
     let mut resources = Resources::new(
         texture_demon_missile,
         texture_player_missile,
@@ -179,35 +181,35 @@ pub async fn load_resources(game_render_target: RenderTarget) -> Resources {
         use EnemyColor::{Green, Purple, Red};
         use EnemyType::{Mini, Normal};
         resources
-            .load_texture("resources/demon_mini_green_1.png", Green, Mini)
+            .load_texture(include_bytes!("../resources/demon_mini_green_1.png"), Green, Mini)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_mini_red_1.png", Red, Mini)
+            .load_texture(include_bytes!("../resources/demon_mini_red_1.png"), Red, Mini)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_mini_purple_1.png", Purple, Mini)
+            .load_texture(include_bytes!("../resources/demon_mini_purple_1.png"), Purple, Mini)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_normal_green_1.png", Green, Normal)
+            .load_texture(include_bytes!("../resources/demon_normal_green_1.png"), Green, Normal)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_normal_green_2.png", Green, Normal)
+            .load_texture(include_bytes!("../resources/demon_normal_green_2.png"), Green, Normal)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_normal_purple_1.png", Purple, Normal)
+            .load_texture(include_bytes!("../resources/demon_normal_purple_1.png"), Purple, Normal)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_normal_purple_2.png", Purple, Normal)
+            .load_texture(include_bytes!("../resources/demon_normal_purple_2.png"), Purple, Normal)
             .await
             .unwrap();
         resources
-            .load_texture("resources/demon_normal_red_1.png", Red, Normal)
+            .load_texture(include_bytes!("../resources/demon_normal_red_1.png"), Red, Normal)
             .await
             .unwrap();
     }
