@@ -91,9 +91,7 @@ async fn main() {
         );
 
         game_manager.draw_unscaled();
-
         game_manager.frame_sounds();
-
         next_frame().await
     }
 }
