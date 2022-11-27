@@ -347,6 +347,7 @@ impl GameState for GameStateGame {
                 font_scale: 1f32,
                 color: YELLOW,
                 font_scale_aspect: 1f32,
+                rotation: 0f32
             },
         );
     }
@@ -431,6 +432,7 @@ impl GameState for GameStateMenu {
                     font_scale: 1f32,
                     color: YELLOW,
                     font_scale_aspect: 1f32,
+                    rotation: 0f32
                 },
             );
         }
@@ -448,6 +450,7 @@ impl GameState for GameStateMenu {
                 font_scale: 1f32,
                 color: YELLOW,
                 font_scale_aspect: 1f32,
+                rotation: 0f32
             },
         );
     }
